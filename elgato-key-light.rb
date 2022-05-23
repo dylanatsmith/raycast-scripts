@@ -16,14 +16,6 @@
 # @raycast.description Set Elgato Key Light brightness and temperature
 
 
-
-# Temperature ranges from 143 to 344. This is a difference of 201.
-# So arg can be 0–10 and then gets multipled and added to the lowest
-# possible temp to make things easier for input.
-def temperatureScaleToValue(scaleInput)
-  return 143 + (scaleInput * 20)
-end
-
 # If accepting an argument:
 arg1 = ARGV[0].to_i
 arg2 = ARGV[1].to_i
@@ -35,6 +27,13 @@ PORT="9123"
 
 
 # Main program
+
+# Temperature ranges from 143 to 344. This is a difference of 201.
+# So arg can be 0–10 and then gets multipled and added to the lowest
+# possible temp to make things easier for input.
+def temperatureScaleToValue(scaleInput)
+  return 143 + (scaleInput * 20)
+end
 
 require "json"
 require "net/http"
