@@ -5,21 +5,22 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Daytime
+# @raycast.title Key Light
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.argument1 { "type": "text", "placeholder": "Brightness" }
+# @raycast.argument1 { "type": "text", "placeholder": "Brightness"}
+# @raycast.argument2 { "type": "text", "placeholder": "Temperature"}
 
 # Documentation:
-# @raycast.description Set Key Light to Daytime.
+# @raycast.description Set Key Light.
 
 # If accepting an argument:
 arg1 = ARGV[0].to_i
+arg2 = ARGV[1].to_i
 
 
 # Configuration
-
 HOST="192.168.8.141"
 PORT="9123"
 
@@ -54,7 +55,10 @@ if res.code == "200"
       {
         "on": 1,
         "brightness": arg1, # 0 to 100
-        "temperature": 160 # 143 to 344
+        # Temperature ranges from 143 to 344. This is a difference of 201.
+        # So arg2 can be 0–10 and then gets multipled and added to the lowest
+        # possible temp to make things easier for input.
+        "temperature": 143 + (arg2 * 20)
       }
     ]
   }.to_json
@@ -64,9 +68,9 @@ if res.code == "200"
   }
 
   if res.code == "200"
-    puts "Key Light set to Daytime mode"
+    puts "Key Light set to brightness #{arg1} and temperature #{arg2}"
   else
-    puts "Key Light failed to set Daytime mode"
+    puts "Key Light failed"
     exit(1)
   end
 else
