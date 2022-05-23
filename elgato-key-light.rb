@@ -9,8 +9,8 @@
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.argument1 { "type": "text", "placeholder": "Brightness" }
-# @raycast.argument2 { "type": "text", "placeholder": "Temperature" }
+# @raycast.argument1 { "type": "text", "placeholder": "Brightness", "optional": true }
+# @raycast.argument2 { "type": "text", "placeholder": "Temperature", "optional": true }
 
 # Documentation:
 # @raycast.description Set Elgato Key Light brightness and temperature
@@ -25,8 +25,8 @@ def temperatureScaleToValue(scaleInput)
 end
 
 # If accepting an argument:
-newBrightness = ARGV[0].to_i * 10
-newTemperature = temperatureScaleToValue(ARGV[1].to_i)
+arg1 = ARGV[0].to_i
+arg2 = ARGV[1].to_i
 
 
 # Configuration
@@ -54,6 +54,18 @@ if res.code == "200"
   if first_light.nil?
     puts "Failed parsing first light"
     exit(1)
+  end
+
+  if (!arg1.nil? && !arg1.zero?)
+    newBrightness = arg1 * 10
+  else
+    newBrightness = first_light["brightness"]
+  end
+
+  if (!arg2.nil? && !arg2.zero?)
+    newTemperature = temperatureScaleToValue(arg2)
+  else
+    newTemperature = first_light["temperature"]
   end
 
   uri = URI("http://#{HOST}:#{PORT}/elgato/lights")
