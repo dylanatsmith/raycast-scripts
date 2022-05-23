@@ -8,8 +8,14 @@
 # @raycast.title Daytime
 # @raycast.mode silent
 
+# Optional parameters:
+# @raycast.argument1 { "type": "text", "placeholder": "Brightness" }
+
 # Documentation:
-# @raycast.description Set Key Light to Daytime preset
+# @raycast.description Set Key Light to Daytime.
+
+# If accepting an argument:
+arg1 = ARGV[0].to_i
 
 
 # Configuration
@@ -47,10 +53,8 @@ if res.code == "200"
     "lights": [
       {
         "on": 1,
-        # Brightness 0–100
-        # Temperature 143–344
-        "brightness": 20,
-        "temperature": 25
+        "brightness": arg1, # 0 to 100
+        "temperature": 160 # 143 to 344
       }
     ]
   }.to_json
