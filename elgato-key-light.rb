@@ -9,15 +9,24 @@
 # @raycast.mode silent
 
 # Optional parameters:
-# @raycast.argument1 { "type": "text", "placeholder": "Brightness"}
-# @raycast.argument2 { "type": "text", "placeholder": "Temperature"}
+# @raycast.argument1 { "type": "text", "placeholder": "Brightness" }
+# @raycast.argument2 { "type": "text", "placeholder": "Temperature" }
 
 # Documentation:
-# @raycast.description Set Key Light.
+# @raycast.description Set Elgato Key Light brightness and temperature
+
+
+
+# Temperature ranges from 143 to 344. This is a difference of 201.
+# So arg can be 0–10 and then gets multipled and added to the lowest
+# possible temp to make things easier for input.
+def temperatureScaleToValue(scaleInput)
+  return 143 + (scaleInput * 20)
+end
 
 # If accepting an argument:
-arg1 = ARGV[0].to_i
-arg2 = ARGV[1].to_i
+newBrightness = ARGV[0].to_i * 10
+newTemperature = temperatureScaleToValue(ARGV[1].to_i)
 
 
 # Configuration
@@ -54,11 +63,8 @@ if res.code == "200"
     "lights": [
       {
         "on": 1,
-        "brightness": arg1, # 0 to 100
-        # Temperature ranges from 143 to 344. This is a difference of 201.
-        # So arg2 can be 0–10 and then gets multipled and added to the lowest
-        # possible temp to make things easier for input.
-        "temperature": 143 + (arg2 * 20)
+        "brightness": newBrightness,
+        "temperature": newTemperature
       }
     ]
   }.to_json
@@ -68,7 +74,7 @@ if res.code == "200"
   }
 
   if res.code == "200"
-    puts "Key Light set to brightness #{arg1} and temperature #{arg2}"
+    puts "Key Light set to brightness #{newBrightness} and temperature #{newTemperature}"
   else
     puts "Key Light failed"
     exit(1)
