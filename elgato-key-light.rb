@@ -29,10 +29,10 @@ PORT="9123"
 # Main program
 
 # Temperature ranges from 143 to 344. This is a difference of 201.
-# So arg can be 0–10 and then gets multipled and added to the lowest
+# So arg can be 0–100 and then gets multipled and added to the lowest
 # possible temp to make things easier for input.
 def temperatureScaleToValue(scaleInput)
-  return 143 + (scaleInput * 20)
+  return 143 + (scaleInput * 2)
 end
 
 require "json"
@@ -56,7 +56,7 @@ if res.code == "200"
   end
 
   if (!arg1.nil? && !arg1.zero?)
-    newBrightness = arg1 * 10
+    newBrightness = arg1
   else
     newBrightness = first_light["brightness"]
   end
