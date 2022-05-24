@@ -87,7 +87,7 @@ if res.code == "200"
   }
 
   if res.code == "200"
-    puts "Key Light set to brightness #{newBrightness} and temperature #{newTemperature}"
+    puts "Key Light set to brightness #{newBrightness} and temperature #{ (newTemperature - 143) / 2 }"
   else
     puts "Key Light failed"
     exit(1)
