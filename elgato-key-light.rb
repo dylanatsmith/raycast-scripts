@@ -24,7 +24,7 @@ arg2 = ARGV[1].to_i
 # Configuration
 # Tip: Change this IP address to the IP listed in the settings for your light
 # behind the slider icon in the Elgato Key Light app.
-HOST="192.168.8.141"
+HOST="192.168.8.151"
 PORT="9123"
 
 
